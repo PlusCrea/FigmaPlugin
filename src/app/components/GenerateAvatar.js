@@ -33,7 +33,7 @@ async function getEncodedImageFromURL(url) {
     });
 }
 
-export default async function fetchMetaTags() {
+export default async function fetchMetaTags(imageUrl) {
     let metaTags = {};
 
     let images = [
@@ -43,10 +43,11 @@ export default async function fetchMetaTags() {
         'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400&h=350&dpr=1',
         'https://images.pexels.com/photos/1382731/pexels-photo-1382731.jpeg?auto=compress&cs=tinysrgb&w=400&h=350&dpr=1',
     ];
+    let imageData;
+    if (imageUrl === undefined)
+        imageData = await getEncodedImageFromURL(images[Math.floor(Math.random() * images.length)]);
+    else imageData = await getEncodedImageFromURL(imageUrl);
 
-    let imageData = await getEncodedImageFromURL(images[Math.floor(Math.random() * images.length)]);
-
-    console.log('imageData', imageData);
     metaTags.image = {
         data: imageData.data,
         url: imageData.img.src,

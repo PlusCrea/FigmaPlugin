@@ -6,17 +6,18 @@ figma.showUI(__html__, { width: 950, height: 450 });
 figma.ui.onmessage = async (msg) => {
     await figma.loadFontAsync({ family: "Inter", style: "Regular" })    
 
-    console.log("User", await figma.currentUser.id);
-       figma.ui.postMessage({ type: 'enable-element', user: figma.currentUser.id });
-console.log("select",figma.currentPage.selection.slice());
+    //console.log("User", await figma.currentUser.id);
+      // figma.ui.postMessage({ type: 'enable-element', user: figma.currentUser.id });
+//console.log("select",figma.currentPage.selection.slice());
 
     //burada sadece id ve name i kaydedersek kolayca elemanı bulabiliyoruz.
+  /*
     let arr = [];
     const node = figma.currentPage.findOne((node => node.id === "69:6"));
     arr.push(node)
     console.log("find", arr);
     figma.currentPage.selection = arr;
-
+*/
     //await figma.clientStorage.setAsync("set", figma.currentPage.selection.slice());
     //console.log("set",await figma.clientStorage.getAsync("set"));
 
@@ -35,10 +36,23 @@ console.log("select",figma.currentPage.selection.slice());
         figma.ui.postMessage({ type: 'enable-element', name: "convert" });
     }
 
+
+    if (msg.type === 'AddIcon') {
+        console.log("Icon",msg);
+        
+    }
+
     if (msg.type === 'Avatar') { 
+        console.log("sec",figma.currentPage.selection.length);
+        
+            if (figma.currentPage.selection.length !== 1) {
+                figma.notify(`Please select a fillable object`);
+            }
+
          const selected = figma.currentPage.selection[0] as GeometryMixin
  
         let img = figma.createImage(msg.image);
+        
         console.log("Yeni",img);
         selected.fills = [{
                 imageHash: img.hash,
@@ -50,7 +64,7 @@ console.log("select",figma.currentPage.selection.slice());
 
     if (msg.type === 'DateFormat') {
     if (figma.currentPage.selection.length !== 1) {
-      return "Select a single node."
+         figma.notify(`Please select a fillable object`);
     }
     
     const node = figma.currentPage.selection[0]
