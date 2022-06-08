@@ -1,8 +1,8 @@
 import * as React from 'react';
 import '../styles/ui.css';
 //import axios from 'axios';
-import MaterialIcon from 'material-icons-react';
-import * as ReactDOMServer from 'react-dom/server';
+//import MaterialIcon from 'material-icons-react';
+//import * as ReactDOMServer from 'react-dom/server';
 
 declare function require(path: string): any;
 
@@ -25,7 +25,7 @@ const App = ({}) => {
     const onCancel = () => {
         parent.postMessage({pluginMessage: {type: 'cancel'}}, '*');
     };
-
+    /*
     function getEditIconPath() {
         const iconString = ReactDOMServer.renderToString(<MaterialIcon icon="account_box" size="large" />);
         const parser = new DOMParser();
@@ -33,16 +33,17 @@ const App = ({}) => {
         const iconPath = svgDoc.querySelector('path')?.getAttribute('d') as string;
 
         //return iconPath;
-        console.log('iconPath', iconPath);
+        //console.log('iconPath', iconPath);
     }
-
+    */
+    /*
     const MsgListener = (e) => {
         console.log('geldi', e.clientX);
 
-        if (e.view.length === 0) return;
+        //if (e.view.length === 0) return;
 
-        const file = new File([e.target.innerHTML], 'content.svg', {type: 'image/svg+xml'});
-        parent.postMessage({pluginMessage: {type: 'AddIcon', data: file}}, '*');
+        //const file = new File([e.target.innerHTML], 'content.svg', {type: 'image/svg+xml'});
+        //parent.postMessage({pluginMessage: {type: 'AddIcon', data: e}}, '*');
         /*
         parent.postMessage(
             {
@@ -58,20 +59,44 @@ const App = ({}) => {
             '*'
         );
         */
-    };
+    //  };
 
     React.useEffect(() => {
-        getEditIconPath();
-        window.addEventListener('dragend', MsgListener);
+        //getEditIconPath();
+        //window.addEventListener('dragend', MsgListener);
 
         return () => {
-            window.removeEventListener('dragend', MsgListener);
+            //  window.removeEventListener('dragend', MsgListener);
         };
     }, []);
 
+    const Dragend = (e) => {
+        if (e.view.length === 0) return;
+
+        // Getting the position of the cursor relative to the top-left corner of the browser page (Where the hamburger icon is)
+        /*
+        const dropPosition = {
+            clientX: e.clientX,
+            clientY: e.clientY,
+        };
+        */
+        //const file = new File([e.target.innerHTML], 'content.svg', {type: 'image/svg+xml'});
+        //console.log('Burda', [file]);
+        //parent.postMessage({pluginMessage: {type: 'AddIcon', pos: dropPosition, icon: [file]}}, '*');
+        parent.postMessage(
+            {
+                pluginDrop: {
+                    clientX: e.clientX,
+                    clientY: e.clientY,
+                    items: [{type: 'image/svg+xml', data: e.target.innerHTML}],
+                },
+            },
+            '*'
+        );
+    };
     return (
         <div>
-            <h2 className="baslik">UnSplash</h2>
+            <h2 className="baslik">Icon Search</h2>
             <p>
                 Search: <input ref={countRef} />
             </p>
@@ -83,7 +108,7 @@ const App = ({}) => {
             <div>
                 <p>Drag any icon to the canvas:</p>
                 <div className="icons-grid">
-                    <span className="icon" draggable="true">
+                    <span className="icon" draggable="true" onDragEnd={Dragend}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -91,9 +116,9 @@ const App = ({}) => {
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             className="feather feather-activity"
                         >
                             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
@@ -108,9 +133,9 @@ const App = ({}) => {
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             className="feather feather-airplay"
                         >
                             <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
@@ -126,9 +151,9 @@ const App = ({}) => {
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             className="feather feather-alert-circle"
                         >
                             <circle cx="12" cy="12" r="10"></circle>
@@ -145,9 +170,9 @@ const App = ({}) => {
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             className="feather feather-align-center"
                         >
                             <line x1="18" y1="10" x2="6" y2="10"></line>
@@ -165,9 +190,9 @@ const App = ({}) => {
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             className="feather feather-anchor"
                         >
                             <circle cx="12" cy="5" r="3"></circle>
@@ -184,9 +209,9 @@ const App = ({}) => {
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             className="feather feather-arrow-left-circle"
                         >
                             <circle cx="12" cy="12" r="10"></circle>
@@ -203,9 +228,9 @@ const App = ({}) => {
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             className="feather feather-bar-chart"
                         >
                             <line x1="12" y1="20" x2="12" y2="10"></line>
@@ -222,9 +247,9 @@ const App = ({}) => {
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             className="feather feather-bluetooth"
                         >
                             <polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"></polyline>
